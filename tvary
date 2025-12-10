@@ -1,0 +1,33 @@
+import math
+from abc import ABC, abstractmethod
+class Tvar(ABC):
+@abstractmethod
+def plocha(self) -> float:
+pass
+class Kruh(Tvar):
+def __init__(self, polomer: float):
+self.polomer = polomer
+def plocha(self) -> float:
+return math.pi * (self.polomer ** 2)
+class Obdlznik(Tvar):
+def __init__(self, sirka: float, vyska: float):
+self.sirka = sirka
+self.vyska = vyska
+def plocha(self) -> float:
+return self.sirka * self.vyska
+def vypocitaj_celkovu_plochu(tvary: list[Tvar]) -> float:
+"""Polymorfizmus: nevieme, či ide o Kruh, Obdlznik... stačí vedieť, že majú metódu
+plocha()."""
+celkom = 0.0
+for t in tvary:
+celkom += t.plocha()
+return celkom
+tvary = [
+Kruh(1),
+Kruh(2),
+Obdlznik(3, 4),
+Obdlznik(5, 6),
+]
+for t in tvary:
+print(type(t).__name__, "plocha =", t.plocha())
+print("Celková plocha všetkých tvarov =", vypocitaj_celkovu_plochu(tvary))
