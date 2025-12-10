@@ -1,0 +1,108 @@
+from abc import ABC, abstractmethod
+
+class Tvar(ABC):
+    def __init__(self, nazov):
+        self.nazov = nazov
+
+    def info(self):
+        print(f"Názov: {self.nazov}")
+
+    @abstractmethod
+    def obsah(self):
+        pass
+
+    @abstractmethod
+    def obvod(self):
+        pass
+
+
+
+
+import math
+
+class Obdlznik(Tvar):
+    def __init__(self, a, b):
+        super().__init__("Obdlznik")
+        self.a = a
+        self.b = b
+
+    def obsah(self):
+        return self.a * self.b
+
+    def obvod(self):
+        return 2 * (self.a + self.b)
+
+class Kruh(Tvar):
+    def __init__(self, r):
+        super().__init__("Kruh")
+        self.r = r
+
+    def obsah(self):
+        return math.pi * self.r ** 2
+
+    def obvod(self):
+        return 2 * math.pi * self.r
+
+class Trojuholnik(Tvar):
+    def __init__(self, a, b, c):
+        super().__init__("Trojuholnik")
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def obsah(self):
+        s = (self.a + self.b + self.c) / 2
+        return math.sqrt(s * (s - self.a) * (s - self.b) * (s - self.c))
+
+    def obvod(self):
+        return self.a + self.b + self.c
+
+
+class Kreslenie:
+    def __init__(self):
+        self.tvary = []
+
+    def pridaj_tvar(self, tvar):
+        self.tvary.append(tvar)
+
+    def vypis_vsetky(self):
+        for tvar in self.tvary:
+            tvar.info()
+            print(f"Obsah: {tvar.obsah():.2f}")
+            print(f"Obvod: {tvar.obvod():.2f}")
+            print()
+
+    def najdi_najvacsi_podla_obsahu(self):
+        if not self.tvary:
+            return None
+        najvacsi_tvar = self.tvary[0]
+        for tvar in self.tvary[1:]:
+            if tvar.obsah() > najvacsi_tvar.obsah():
+                najvacsi_tvar = tvar
+        return najvacsi_tvar
+
+def main():
+    kreslenie = Kreslenie()
+
+    # Vytvorenie tvarov
+    obdlznik = Obdlznik(4, 6)
+    kruh = Kruh(3)
+    trojuholnik = Trojuholnik(3, 4, 5)
+
+    # Pridanie tvarov do kreslenia
+    kreslenie.pridaj_tvar(obdlznik)
+    kreslenie.pridaj_tvar(kruh)
+    kreslenie.pridaj_tvar(trojuholnik)
+
+    # Vypísanie všetkých tvarov
+    kreslenie.vypis_vsetky()
+
+    # Nájdeme tvar s najväčším obsahom
+    najvacsi_tvar = kreslenie.najdi_najvacsi_podla_obsahu()
+    if najvacsi_tvar:
+        print(f"Tvar s najväčším obsahom je: {najvacsi_tvar.nazov}")
+        print(f"Obsah: {najvacsi_tvar.obsah():.2f}")
+        print(f"Obvod: {najvacsi_tvar.obvod():.2f}")
+
+if __name__ == "__main__":
+    main()
