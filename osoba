@@ -1,0 +1,26 @@
+from abc import ABC, abstractmethod
+class Osoba(ABC):
+def __init__(self, meno: str, vek: int):
+if vek < 0:
+raise ValueError("Vek nemôže byť záporný.")
+self.meno = meno
+self.vek = vek
+@abstractmethod
+def predstav_sa(self):
+pass
+class Student(Osoba):
+def predstav_sa(self):
+return f"Ahoj, som študent {self.meno}."
+class Ucitel(Osoba):
+def predstav_sa(self):
+return f"Dobrý deň, som učiteľ {self.meno}."
+osoby = [
+Student("Adam", 20),
+Ucitel("Eva", 40)
+]
+for o in osoby:
+print(o.predstav_sa())
+try:
+Student("Brano", -5)
+except ValueError as e:
+print("Chyba:", e
