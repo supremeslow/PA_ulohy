@@ -1,0 +1,29 @@
+class BankovyUcet:
+def __init__(self, majitel: str, pociatocny_stav: float = 0.0):
+self.majitel = majitel
+self.zostatok = pociatocny_stav
+def vloz(self, suma: float):
+"""Pridá peniaze na účet."""
+if suma <= 0:
+print("Suma na vklad musí byť kladná.")
+return
+self.zostatok += suma
+def vyber(self, suma: float):
+"""Vyberie peniaze z účtu (ak je dosť)."""
+if suma <= 0:
+print("Suma na výber musí byť kladná.")
+return
+if suma > self.zostatok:
+print("Nedostatok prostriedkov na účte.")
+return
+self.zostatok -= suma
+def info(self):
+"""Vypíše informácie o účte."""
+print(f"Majiteľ: {self.majitel}, zostatok: {self.zostatok:.2f} €")
+ucet1 = BankovyUcet("Ján", 100.0)
+ucet1.info()
+ucet1.vloz(50)
+ucet1.info()
+ucet1.vyber(200) # nebude možné
+ucet1.vyber(80) # bude možné
+ucet1.info()
