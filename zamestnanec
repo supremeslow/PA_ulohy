@@ -1,0 +1,30 @@
+from abc import ABC, abstractmethod
+class Zamestnanec(ABC):
+def __init__(self, meno: str):
+self.meno = meno
+@abstractmethod
+def vypocitaj_mzdu(self) -> float:
+"""Abstraktná metóda – musí byť implementovaná v podtriedach."""
+pass
+def info(self):
+"""Bežná (neabstraktná) metóda v abstraktnej triede."""
+print(f"Zamestnanec: {self.meno}")
+class Programator(Zamestnanec):
+def __init__(self, meno: str, hodinova_mzda: float, odpracovane_hodiny: int):
+super().__init__(meno)
+self.hodinova_mzda = hodinova_mzda
+self.odpracovane_hodiny = odpracovane_hodiny
+def vypocitaj_mzdu(self) -> float:
+return self.hodinova_mzda * self.odpracovane_hodiny
+class Manazer(Zamestnanec):
+def __init__(self, meno: str, mesacny_fix: float, bonus: float):
+super().__init__(meno)
+self.mesacny_fix = mesacny_fix
+self.bonus = bonus
+def vypocitaj_mzdu(self) -> float:
+return self.mesacny_fix + self.bonus
+zam1 = Programator("Jozef", hodinova_mzda=20, odpracovane_hodiny=160)
+zam2 = Manazer("Mária", mesacny_fix=2000, bonus=500)
+for z in [zam1, zam2]:
+z.info()
+print("Mzda:", z.vypocitaj_mzdu())
