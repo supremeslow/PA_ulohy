@@ -1,0 +1,22 @@
+class Zviera:
+def zvuk(self):
+raise NotImplementedError("Toto zviera nemá definovaný zvuk.")
+class Pes(Zviera):
+def zvuk(self):
+return "Hav!"
+class Macka(Zviera):
+def zvuk(self):
+return "Mňau!"
+def vytvor_zviera(typ: str) -> Zviera:
+if typ == "pes":
+return Pes()
+elif typ == "macka":
+return Macka()
+else:
+raise ValueError("Neznámy typ zvieraťa.")
+for t in ["pes", "macka", "krava"]:
+try:
+z = vytvor_zviera(t)
+print(z.zvuk())
+except ValueError as e:
+print("Chyba:", e)
